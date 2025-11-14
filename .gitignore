@@ -3,17 +3,19 @@
 
 # === CRITICAL: Configuration Files with Secrets ===
 config/config.yaml
+config/frequency_words.txt
 .env
 .env.local
 
 # Keep example configs for reference
 !config/config.example.yaml
+!config/frequency_words.example.txt
 
 # === Output Data ===
 output/
-*.txt
-*.json
-*.html
+output/**/*.txt
+output/**/*.json
+output/**/*.html
 
 # === Python ===
 __pycache__/

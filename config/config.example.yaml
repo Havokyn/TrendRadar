@@ -1,0 +1,152 @@
+# ChinaNewsStream Configuration File
+# English version with detailed comments
+
+# === Application Settings ===
+app:
+  # Version check URL (checks for updates from original project)
+  version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version"
+  # Show version update notifications (set to false to disable)
+  show_version_update: true
+
+# === Crawler Settings ===
+crawler:
+  # Request interval in milliseconds (minimum 50ms recommended)
+  request_interval: 1000
+
+  # Enable crawler functionality
+  # Set to false to stop all data collection
+  enable_crawler: true
+
+  # Proxy settings
+  use_proxy: false  # Set to true to enable proxy
+  default_proxy: "http://127.0.0.1:10086"  # Your proxy URL
+
+# === Push/Report Mode ===
+# Three modes available:
+#
+# 🔸 daily (Daily Summary Mode)
+#   • Timing: Scheduled push (default: hourly)
+#   • Content: All matching news for the day + new items section
+#   • Use case: Daily briefings, comprehensive trend overview
+#
+# 🔸 current (Current Trending Mode)
+#   • Timing: Scheduled push (default: hourly)
+#   • Content: Current trending matches + new items section
+#   • Use case: Real-time hot topic tracking
+#
+# 🔸 incremental (Incremental Monitoring Mode)
+#   • Timing: Only when new items appear
+#   • Content: Only newly appeared matching news
+#   • Use case: Avoid duplicate notifications, high-frequency monitoring
+
+report:
+  mode: "daily"  # Options: "daily" | "incremental" | "current"
+  rank_threshold: 5  # Highlight news ranked above this threshold
+
+# === Notification Settings ===
+notification:
+  # Enable push notifications
+  # Set to false to disable all notifications
+  enable_notification: true
+
+  # Message batching settings (DO NOT MODIFY unless you know what you're doing)
+  message_batch_size: 4000    # General message batch size (bytes)
+  dingtalk_batch_size: 20000  # DingTalk batch size (bytes)
+  feishu_batch_size: 29000    # Feishu/Lark batch size (bytes)
+  batch_send_interval: 3      # Interval between batches (seconds)
+  feishu_message_separator: "━━━━━━━━━━━━━━━━━━━"  # Feishu message divider
+
+  # === Push Time Window (Optional Feature) ===
+  # Purpose: Limit notification time range to avoid off-hours interruptions
+  # Use cases:
+  #   - Only receive notifications during work hours (e.g., 09:00-18:00)
+  #   - Get evening summaries at fixed time (e.g., 20:00-22:00)
+  push_window:
+    enabled: false  # Enable time window control
+    # Note: GitHub Actions timing is unstable, recommend at least 2-hour window
+    # For precise scheduling, use Docker deployment on your own server
+    time_range:
+      start: "20:00"  # Window start time (Beijing timezone)
+      end: "22:00"    # Window end time (Beijing timezone)
+    once_per_day: true  # Push only once per day within window
+    push_record_retention_days: 7  # Days to keep push records
+
+  # === Webhook URLs ===
+  # SECURITY WARNING: Do not fill in webhooks here if deploying via GitHub fork!
+  # Use environment variables or GitHub Secrets instead
+  # Risk: Webhooks in public repos can lead to spam or security issues
+  webhooks:
+    feishu_url: ""           # Feishu/Lark bot webhook URL
+    dingtalk_url: ""         # DingTalk bot webhook URL
+    wework_url: ""           # Enterprise WeChat bot webhook URL
+    telegram_bot_token: ""   # Telegram Bot Token (from @BotFather)
+    telegram_chat_id: ""     # Telegram Chat ID (from @userinfobot)
+
+    # Email settings
+    email_from: ""           # Sender email address
+    email_password: ""       # Email password or app-specific password
+    email_to: ""             # Recipient email(s), comma-separated for multiple
+    email_smtp_server: ""    # SMTP server (optional, auto-detected)
+    email_smtp_port: ""      # SMTP port (optional, auto-detected)
+
+    # ntfy settings
+    ntfy_server_url: "https://ntfy.sh"  # ntfy server URL (default: public server)
+    ntfy_topic: ""           # ntfy topic name (must be unique)
+    ntfy_token: ""           # ntfy access token (optional, for private topics)
+
+# === Ranking Algorithm Weights ===
+# Combine news from multiple platforms and rerank based on your preferences
+# Total must equal 1.0
+weight:
+  rank_weight: 0.6       # Weight for news ranking (60%)
+  frequency_weight: 0.3  # Weight for appearance frequency (30%)
+  hotness_weight: 0.1    # Weight for ranking quality (10%)
+
+# CUSTOMIZATION EXAMPLES:
+#
+# For real-time trending (content creators, marketers):
+#   rank_weight: 0.8
+#   frequency_weight: 0.1
+#   hotness_weight: 0.1
+#
+# For deep analysis (investors, researchers):
+#   rank_weight: 0.4
+#   frequency_weight: 0.5
+#   hotness_weight: 0.1
+
+# === Monitored Platforms ===
+# Note: "name" is for display only and can be changed anytime
+# "id" must match platform IDs from https://newsnow.busiyi.world/
+platforms:
+  - id: "toutiao"
+    name: "Toutiao"
+  - id: "baidu"
+    name: "Baidu Trending"
+  - id: "wallstreetcn-hot"
+    name: "Wallstreet CN"
+  - id: "thepaper"
+    name: "The Paper"
+  - id: "bilibili-hot-search"
+    name: "Bilibili Trending"
+  - id: "cls-hot"
+    name: "Cailian Press"
+  - id: "ifeng"
+    name: "Phoenix News"
+  - id: "tieba"
+    name: "Tieba"
+  - id: "weibo"
+    name: "Weibo"
+  - id: "douyin"
+    name: "Douyin"
+  - id: "zhihu"
+    name: "Zhihu"
+
+# MORE PLATFORMS AVAILABLE:
+# See full list at: https://github.com/ourongxing/newsnow/tree/main/server/sources
+# Examples:
+#   - id: "36kr"          # 36Kr tech news
+#   - id: "sspai"         # SSPAI
+#   - id: "hellogithub"   # HelloGitHub
+#   - id: "juejin"        # Juejin tech community
+#   - id: "zaobao"        # Zaobao
+#   - id: "qq-news"       # QQ News

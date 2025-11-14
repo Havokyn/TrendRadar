@@ -1,0 +1,220 @@
+# ChinaNewsStream - Keyword Monitoring Configuration
+# English Example with Syntax Guide
+#
+# === SYNTAX GUIDE ===
+#
+# 1. Normal keywords (no prefix):
+#    - Match any keyword in the group
+#    - Example: Tesla, SpaceX
+#
+# 2. Required keywords (+prefix):
+#    - Must appear together with normal keywords
+#    - Example: +launch (requires "launch" in title)
+#
+# 3. Filter keywords (!prefix):
+#    - Exclude news containing these words
+#    - Example: !rumor (exclude news with "rumor")
+#
+# 4. Groups (separated by blank lines):
+#    - Each group is independent
+#    - Different groups track different topics
+#
+# === MATCHING LOGIC ===
+#
+# Group example:
+#   Tesla
+#   SpaceX
+#   +Elon Musk
+#   !rumor
+#
+# Matches:
+#   ✅ "SpaceX launches satellite with Elon Musk" (has SpaceX + Elon Musk)
+#   ✅ "Tesla announces new product with Elon Musk" (has Tesla + Elon Musk)
+#
+# Does NOT match:
+#   ❌ "Tesla stock price rises" (has Tesla but missing "Elon Musk")
+#   ❌ "Rumor: SpaceX and Elon Musk news" (has keywords but includes "rumor")
+#
+# === CONFIGURATION TIPS ===
+#
+# 1. Start broad, then narrow:
+#    - First: Add general keywords
+#    - Then: Add +required words to reduce noise
+#    - Finally: Add !filter words to exclude spam
+#
+# 2. Keep groups focused:
+#    - Don't mix unrelated topics in one group
+#    - Create separate groups for different interests
+#
+# 3. Keyword priority:
+#    - Keywords listed first have higher priority
+#    - Arrange by importance to you
+#
+# === EXAMPLE CONFIGURATIONS ===
+
+# === Technology Companies ===
+Tesla
+SpaceX
+Elon Musk
+!advertisement
+!rumor
+
+Apple
+iPhone
+iPad
+Tim Cook
++release
++announcement
+
+Microsoft
+Azure
+GitHub
++AI
+!advertisement
+
+# === Cryptocurrency & Blockchain ===
+Bitcoin
+BTC
+Ethereum
+ETH
++price
++market
+!prediction
+!scam
+
+# === Artificial Intelligence ===
+ChatGPT
+OpenAI
+GPT-4
+Claude
+Anthropic
+Gemini
+Google AI
++AI
++artificial intelligence
++machine learning
+!advertisement
+!tutorial
+
+# === Electric Vehicles ===
+Tesla
+BYD
+NIO
+XPeng
+Li Auto
++electric
++EV
++battery
+!rumor
+
+# === Stock Market ===
+S&P 500
+Nasdaq
+Dow Jones
+NYSE
++stock
++market
++trading
+!prediction
+!advertisement
+
+# === Space & Science ===
+NASA
+SpaceX
+Blue Origin
+James Webb
+Mars
++space
++launch
++mission
+
+# === Cybersecurity ===
+cybersecurity
+data breach
+ransomware
+zero-day
+CVE
++security
++vulnerability
+!advertisement
+
+# === Gaming Industry ===
+PlayStation
+Xbox
+Nintendo
+Steam
++game
++release
+!leak
+!rumor
+
+# === Chinese Tech Companies ===
+# Note: Keep Chinese names for better matching on Chinese platforms
+Huawei
+华为
+Xiaomi
+小米
+ByteDance
+字节跳动
+Tencent
+腾讯
+Alibaba
+阿里巴巴
+
+# === Climate & Environment ===
+climate change
+global warming
+renewable energy
+solar power
+wind energy
++environment
++sustainability
+!advertisement
+
+# === Politics & Policy ===
+# Configure based on your interests
+United States
+China
+European Union
++policy
++regulation
++trade
+!opinion
+!editorial
+
+# === Healthcare & Medicine ===
+vaccine
+clinical trial
+FDA approval
+medical breakthrough
++health
++medicine
++treatment
+!advertisement
+
+# ============================================
+# CUSTOMIZATION NOTES:
+# ============================================
+#
+# 1. This is an ENGLISH EXAMPLE file
+#    - Original project focuses on Chinese content
+#    - English keywords work but may have fewer matches
+#    - Consider mixing English + Chinese for best results
+#
+# 2. To use this configuration:
+#    cp config/frequency_words.example.txt config/frequency_words.txt
+#    nano config/frequency_words.txt  # Edit with your topics
+#
+# 3. Recommended workflow:
+#    a. Copy this file to frequency_words.txt
+#    b. Delete groups you don't care about
+#    c. Add your specific interests
+#    d. Run and monitor for a day
+#    e. Adjust +required and !filter words based on results
+#
+# 4. For Chinese platforms:
+#    - Use Chinese keywords for better matching
+#    - Mix English + Chinese names (e.g., "Tesla" and "特斯拉")
+#    - Platform-specific slang may improve results
+#
+# ============================================
